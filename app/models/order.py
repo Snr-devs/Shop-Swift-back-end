@@ -1,4 +1,4 @@
-from app import db
+from extensions import db
 from datetime import datetime
 
 class Order(db.Model):
@@ -10,13 +10,6 @@ class Order(db.Model):
     total_price = db.Column(db.Numeric, nullable=False)
     status = db.Column(db.String(20), default='pending')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'products': self.products,
-            'total_price': self.total_price,
-            'status': self.status,
-            'created_at': 
-        }
+    
+    def __repr__(self):
+        return f"<Order {self.products}- Total price:{self.total_price}"

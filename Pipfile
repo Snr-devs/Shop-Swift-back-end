@@ -7,12 +7,13 @@ name = "pypi"
 flask-limiter = "*"
 flask-marshmallow = "*"
 psycopg2-binary = "*"
-flask = "*"
 flask-sqlalchemy = "*"
 flask-jwt-extended = "*"
 flask-migrate = "*"
 python-dotenv = "*"
 marshmallow = "*"
+flask = ">=2.2.0"
+werkzeug = "<2.2"
 
 [dev-packages]
 

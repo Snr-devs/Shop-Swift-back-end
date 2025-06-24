@@ -1,4 +1,4 @@
-from app import db
+from app.extensions import db
 from datetime import datetime
 
 class Product(db.Model):
@@ -24,19 +24,6 @@ class Product(db.Model):
         self.stock = stock
         self.image_url = image_url
         self.category = category
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'price': self.price,
-            'description': self.description,
-            'stock': self.stock,
-            'image_url': self.image_url,
-            'category': self.category,
-            'created_at': self.created_at
-            'updated_at': self.updated_at
-        }
 
     def update_stock(self, quantity):
        
