@@ -1,72 +1,81 @@
+💡 OVERALL STRUCTURE OF MVP FEATURES
+🧱 Feature	🎯 What It Does
+User	Register / Get user
+Product	Add / View / Update / Delete products
+Order	Place order / View order(s)
+M-Pesa	Initiate STK Push / Receive callback
 
-🛠️ MVP Features for Your Backend
-1. User Management (Optional for now, but useful later)
-✅ Register user
+✅ 1. User MVP
+Purpose: Register and fetch user info (optional login logic).
 
-✅ Login user
+🔧 Model: User
+id, username, email, phone_number, password (hashed or plain for now)
 
-✅ View user profile
+📦 Routes:
+Method	Route	Purpose
+POST	/users	Register user
+GET	/users/<id>	View user profile
 
-👉 If your assignment doesn’t require auth, you can skip or fake user IDs for now.
+✅ 2. Product MVP
+Purpose: Admin or seller can manage products; users can view products.
 
-2. Products
-✅ List all products (GET /products)
+🔧 Model: Product
+id, name, price, description, stock, image_url
 
-✅ View single product (GET /products/<id>)
+📦 Routes:
+Method	Route	Purpose
+GET	/products	List all products
+GET	/products/<id>	View single product
+POST	/products	Add new product
+PUT	/products/<id>	Update product
+DELETE	/products/<id>	Delete product
 
-✅ Create a product (POST /products)
+✅ 3. Order MVP
+Purpose: Allow a user to place an order and view order(s).
 
-✅ Update product (PUT /products/<id>)
+🔧 Model: Order
+id, user_id, products (JSON or many-to-many), total_price, status, created_at
 
-✅ Delete product (DELETE /products/<id>)
+📦 Routes:
+Method	Route	Purpose
+POST	/orders	Place an order
+GET	/orders	View all user orders
+GET	/orders/<id>	View a specific order
 
+✅ 4. M-Pesa MVP (STK Push)
+Purpose: Allow user to pay via M-Pesa on order.
 
-You'll need a Product model with fields like: name, price, description, image_url, stock, etc.
+🔧 Model: Transaction
+id, order_id, amount, phone_number, mpesa_receipt, status, timestamp
 
-3. Cart / Order
-✅ Create an order (POST /orders)
+📦 Routes:
+Method	Route	Purpose
+POST	/mpesa/stkpush	Start STK Push
+POST	/mpesa/callback	Receive callback from Safaricom
+GET	/transactions	View all payment attempts (optional)
 
-Accepts a list of product IDs and quantities
-
-✅ View orders (user's past orders) (GET /orders)
-
-✅ View single order (GET /orders/<id>)
-
-This can be simple: associate orders with a user (or session), total the price, and mark them as "pending" or "paid".
-
-4. M-Pesa Integration
-✅ STK Push endpoint (POST /mpesa/stkpush)
-
-✅ Callback endpoint (POST /mpesa/callback)
-
-✅ Verify payment (optional)
-
-✅ Store transaction details (amount, phone, status)
-
-You need the Daraja API (Safaricom) and the following:
-
-Business ShortCode
-
-Consumer Key & Secret
-
-Passkey
-
-🧩 Example MVP Routes
-Route	Method	Description
-/products	GET	List products
-/products	POST	Add product
-/products/<id>	GET	View product details
-/orders	POST	Place an order
-/orders	GET	List orders
-/mpesa/stkpush	POST	Trigger M-Pesa STK push
-/mpesa/callback	POST	Receive payment confirmation
-
-⚙️ Models You'll Need
-🧾 Product
-id, name, price, description, image_url, stock
-
-🛒 Order
-id, user_id, products (many-to-many or JSON list), total_price, status, created_at
-
-💰 Transaction
-id, order_id, phone_number, amount, mpesa_receipt, status, timestamp
+📁 Suggested Folder Layout (with only controllers/)
+pgsql
+Copy
+Edit
+ecommerce_app/
+├── app/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── product.py
+│   │   ├── order.py
+│   │   └── transaction.py
+│   ├── controllers/
+│   │   ├── user_controller.py
+│   │   ├── product_controller.py
+│   │   ├── order_controller.py
+│   │   └── mpesa_controller.py
+│   ├── schemas/
+│   └── utils/
+│       └── mpesa_client.py
+├── manage.py
+├── requirements.txt
+├── .env
+└── README.md
