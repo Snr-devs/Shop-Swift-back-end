@@ -1,4 +1,4 @@
-from app import db
+from app.extensions import db
 from werkzeug.security import generate_password_hash
 
 class User(db.Model):
@@ -22,16 +22,6 @@ class User(db.Model):
        
         self.password_hash = generate_password_hash(password)
 
-    def to_dict(self):
-        
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email,
-            'phone_number': self.phone_number,
-            'created_at': 
-            'updated_at':
-        }
 
     def __repr__(self):
         return f'<User {self.username}>'
