@@ -20,6 +20,7 @@
 
 ✅ Delete product (DELETE /products/<id>)
 
+
 You'll need a Product model with fields like: name, price, description, image_url, stock, etc.
 
 3. Cart / Order
