@@ -110,3 +110,46 @@ ecommerce_app/
 ✅ Want to start with User model + registration?
 
 ✅ I’ll help you write and test one piece at a time (with JWT login, refresh, and protected routes)
+
+
+white_check_mark: 1. User MVP
+Purpose: Register and fetch user info (optional login logic).
+
+✅ :wrench: Model: User
+id, username, email, phone_number, password (hashed or plain for now)
+:package: Routes:
+Method	Route	Purpose
+POST	/users	Register user
+GET	/users/<id>	View user profile
+:white_check_mark: 2. Product MVP
+Purpose: Admin or seller can manage products; users can view products.
+
+✅ :wrench: Model: Product
+id, name, price, description, stock, image_url
+:package: Routes:
+Method	Route	Purpose
+GET	/products	List all products
+GET	/products/<id>	View single product
+POST	/products	Add new product
+PUT	/products/<id>	Update product
+DELETE	/products/<id>	Delete product
+:white_check_mark: 3. Order MVP
+Purpose: Allow a user to place an order and view order(s).
+
+✅ :wrench: Model: Order
+id, user_id, products (JSON or many-to-many), total_price, status, created_at
+:package: Routes:
+Method	Route	Purpose
+POST	/orders	Place an order
+GET	/orders	View all user orders
+GET	/orders/<id>	View a specific order
+:white_check_mark: 4. M-Pesa MVP (STK Push)
+Purpose: Allow user to pay via M-Pesa on order.
+
+✅ :wrench: Model: Transaction
+id, order_id, amount, phone_number, mpesa_receipt, status, timestamp
+:package: Routes:
+Method	Route	Purpose
+POST	/mpesa/stkpush	Start STK Push
+POST	/mpesa/callback	Receive callback from Safaricom
+GET	/transactions	View all payment attempts (optional)
