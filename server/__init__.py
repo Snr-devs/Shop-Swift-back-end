@@ -13,6 +13,10 @@ def create_app():
     ma.init_app(app)
     limiter.init_app(app)
 
+    @app.route("/")
+    def home():
+      return {"message": "BookBuddies API is up and running!"}
+
     # we'll register the blueprints here
 
     return app

@@ -2,11 +2,11 @@ import os
 from flask.cli import FlaskGroup
 from dotenv import load_dotenv
 
-from app.__init__ import create_app
-from app.extensions import db
-from app.models.user import User
-from app.models.product import Product
-from app.models.order import Order
+from server.__init__ import create_app
+from server.extensions import db
+from server.models.user import User
+from server.models.product import Product
+from server.models.order import Order
 
 load_dotenv()
 
