@@ -14,6 +14,8 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     orders = db.relationship('Order', back_populates='user', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete-orphan')
+
 
     def __init__(self, username, email, password, phone_number=None):
         self.username = username

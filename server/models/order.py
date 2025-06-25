@@ -31,4 +31,4 @@ class OrderProduct(db.Model):
     product = db.relationship('Product', back_populates='order_items')
 
     def __repr__(self):
-        return f'<OrderProduct order:{self.order_id} product:{self.product_id} qty:{self.quantity}>'
+        return f'<OrderProduct order:{self.order_id} product:{self.product_id} quantity:{self.quantity}>'
