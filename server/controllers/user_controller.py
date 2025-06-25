@@ -1,7 +1,9 @@
 vfrom flask import Blueprint, request, make_response, jsonify
-from models.user import User
-from extensions import db
-from schemas.user_schema import user_schema, users_schema
+from .models.user import User
+from .extensions import db
+from .schemas.user_schema import user_schema, users_schema
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 user_bp = Blueprint('users', __name__)
 
@@ -15,7 +17,6 @@ def register_user():
     phone_number = data.get('phone_number')
     password = data.get('password')
 
-    
     if not username or not email or not password:
         return make_response({'error': 'Username, email, and password are required'}, 400)
 
@@ -25,7 +26,10 @@ def register_user():
     if User.query.filter_by(username=username).first():
         return make_response({'error': 'Username already taken'}, 409)
 
-    new_user = User(username=username, email=email, password=password, phone_number=phone_number)
+    
+    hashed_password = generate_password_hash(password)
+
+    new_user = User(username=username, email=email, password=hashed_password, phone_number=phone_number)
     db.session.add(new_user)
     db.session.commit()
 
