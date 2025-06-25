@@ -10,12 +10,11 @@ class Product(db.Model):
     description = db.Column(db.Text)
     stock = db.Column(db.Integer, nullable=False, default=0)
     image_url = db.Column(db.String)
+    category = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    category = db.Column(db.String)
 
-   
-    order_items = db.relationship('OrderProduct', back_populates='product')
+    order_items = db.relationship('OrderProduct', back_populates='product', cascade='all, delete-orphan')
 
     def __init__(self, name, price, description=None, stock=0, image_url=None, category=None):
         self.name = name
@@ -26,7 +25,6 @@ class Product(db.Model):
         self.category = category
 
     def update_stock(self, quantity):
-       
         self.stock += quantity
         db.session.commit()
 
