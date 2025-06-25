@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    SECRET_KEY=os.env["SECRET_KEY"]
-    JWT_SECRET_KEY=os.env["JWT_SECRET_KEY"]
-    SQLALCHEMY_DATABASE_URI=os.environ["DATABASE_URL"]
+    SECRET_KEY=os.environ.get("SECRET_KEY")
+    JWT_SECRET_KEY=os.environ.get("JWT_SECRET_KEY")
+    SQLALCHEMY_DATABASE_URI=os.environ.get("DATABASE_URL")
 
     DEBUG=os.getenv("DEBUG", "False")=="True"
     SQLALCHEMY_TRACK_MODIFICATIONS=False
