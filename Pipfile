@@ -13,8 +13,10 @@ flask-jwt-extended = "*"
 flask-migrate = "*"
 python-dotenv = "*"
 marshmallow = "*"
+pipenv = "*"
+shell = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.12.3"
