@@ -15,6 +15,8 @@ class Product(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     order_items = db.relationship('OrderProduct', back_populates='product', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', back_populates='product', cascade='all, delete-orphan')
+
 
     def __init__(self, name, price, description=None, stock=0, image_url=None, category=None):
         self.name = name
