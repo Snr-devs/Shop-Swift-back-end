@@ -1,8 +1,7 @@
-
 from flask import Blueprint, request, make_response, jsonify
-from .models.user import User
-from .extensions import db
-from .schemas.user_schema import user_schema
+from server.models.user import User
+from server.extensions import db
+from server.schemas.user_schema import user_schema
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, pre_load
 
 class CommentSchema(Schema):
     id=fields.Int(dump_only=True)

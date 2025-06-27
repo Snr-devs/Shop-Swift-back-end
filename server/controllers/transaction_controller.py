@@ -1,8 +1,8 @@
 from flask import Blueprint, request, make_response, jsonify
-from .extensions import db
-from .models.transaction import Transaction
-from .models.order import Order
-from .schemas.transaction_schema import TransactionSchema
+from server.extensions import db
+from server.models.transaction import Transaction
+from server.models.order import Order
+from server.schemas.mpesa_schema import TransactionSchema
 from datetime import datetime
 
 mpesa_bp = Blueprint('mpesa', __name__)
