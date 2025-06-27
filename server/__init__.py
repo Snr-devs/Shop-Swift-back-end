@@ -1,6 +1,6 @@
 from flask import Flask
-from .config import Config
-from .extensions import db, jwt, ma, limiter, migrate
+from config import Config
+from extensions import db, jwt, ma, limiter, migrate
 from controllers.product_controller import product_bp
 from controllers.order_controller import order_bp
 from controllers.user_controller import user_bp
