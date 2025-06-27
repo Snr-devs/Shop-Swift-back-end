@@ -1,8 +1,11 @@
-vfrom flask import Blueprint, request, make_response, jsonify
+
+from flask import Blueprint, request, make_response, jsonify
 from .models.user import User
 from .extensions import db
-from .schemas.user_schema import user_schema, users_schema
+from .schemas.user_schema import user_schema
 from werkzeug.security import generate_password_hash, check_password_hash
+
+
 
 
 user_bp = Blueprint('users', __name__)
