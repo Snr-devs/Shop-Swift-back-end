@@ -5,7 +5,7 @@ from server.extensions import db
 from server.models.transaction import Transaction
 from server.models.order import Order
 from server.models.user import User
-from app import create_app
+from server.__init__ import create_app
 
 @pytest.fixture
 def test_app():

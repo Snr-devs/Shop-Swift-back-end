@@ -1,5 +1,5 @@
 import pytest
-from app import create_app
+from server.__init__ import create_app
 from server.extensions import db
 from models.product import Product
 
