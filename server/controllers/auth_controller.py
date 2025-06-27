@@ -1,8 +1,8 @@
 from flask import Blueprint, request, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
-from extensions import db
-from models.user import User
-from schemas.user_schema import UserSchema
+from server.extensions import db
+from server.models.user import User
+from server.schemas.user_schema import UserSchema
 
 from flask_jwt_extended import (
     create_access_token,

@@ -1,6 +1,3 @@
-
-
-
 from server.extensions import db
 
 from datetime import datetime

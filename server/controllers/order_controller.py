@@ -1,8 +1,8 @@
 from flask import Blueprint, request, make_response, jsonify
-from .models.order import Order, OrderProduct
-from .models.product import Product
-from .extensions import db
-from .schemas.order_schema import OrderSchema
+from server.models.order import Order, OrderProduct
+from server.models.product import Product
+from server.extensions import db
+from server.schemas.order_schema import OrderSchema
 
 order_bp = Blueprint('orders', __name__)
 order_schema = OrderSchema()

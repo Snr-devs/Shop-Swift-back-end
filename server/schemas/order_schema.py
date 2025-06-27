@@ -1,4 +1,4 @@
-from marshamallow import Schema, fields, ValidationError
+from marshmallow import Schema, fields, ValidationError, validates
 
 class OrderProductSchema(Schema):
     id = fields.Int(dump_only=True)

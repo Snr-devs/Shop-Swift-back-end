@@ -1,7 +1,7 @@
 from flask import Blueprint, request, make_response
-from .models.product import Product
-from .extensions import db
-from .schemas.product_schema import ProductSchema
+from server.models.product import Product
+from server.extensions import db
+from server.schemas.product_schema import ProductSchema
 
 product_bp = Blueprint('products', __name__)
 product_schema = ProductSchema()

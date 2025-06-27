@@ -1,13 +1,13 @@
 from flask import Flask
 from .config import Config
 from .extensions import db, jwt, ma, limiter, migrate
-from controllers.product_controller import product_bp
-from controllers.order_controller import order_bp
-from controllers.user_controller import user_bp
-from controllers.transaction_controller import transaction_bp
-from controllers.comment_controller import comment_bp
-from controllers.auth_controller import auth_bp
-from controllers.task_controller import task_bp
+from server.controllers.product_controller import product_bp
+from server.controllers.order_controller import order_bp
+from server.controllers.user_controller import user_bp
+# from server.controllers.transaction_controller import transaction_bp
+from server.controllers.comment_controller import comment_bp
+from server.controllers.auth_controller import auth_bp
+
 
 
 def create_app():
@@ -29,10 +29,10 @@ def create_app():
     app.register_blueprint(product_bp)
     app.register_blueprint(order_bp)
     app.register_blueprint(user_bp)
-    app.register_blueprint(transaction_bp)
+    # app.register_blueprint(transaction_bp)
     app.register_blueprint(comment_bp)
     app.register_blueprint(auth_bp)
-    app.register_blueprint(task_bp)
+ 
 
 
     return app 

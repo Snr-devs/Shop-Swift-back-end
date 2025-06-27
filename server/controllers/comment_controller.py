@@ -1,9 +1,9 @@
 from flask import Blueprint, request, make_response, jsonify
-from .extensions import db
-from .models.comment import Comment
-from .models.user import User
-from .models.product import Product
-from .schemas.comment_schema import CommentSchema
+from server.extensions import db
+from server.models.comment import Comment
+from server.models.user import User
+from server.models.product import Product
+from server.schemas.comment_schema import CommentSchema
 
 comment_bp = Blueprint('comments', __name__)
 comment_schema = CommentSchema()
