@@ -20,4 +20,4 @@ class CommentSchema(Schema):
 
 comment_schema=CommentSchema()
 
-comments_list_schema=CommentSchema(many=True)
+comments_schema=CommentSchema(many=True)

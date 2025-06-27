@@ -18,4 +18,4 @@ class ProductSchema(Schema):
 
 
 product_schema=ProductSchema()
-product_list_schema=ProductSchema(many=True)
+products_schema=ProductSchema(many=True)

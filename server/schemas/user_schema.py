@@ -22,3 +22,4 @@ class UserSchema(Schema):
     comments = fields.Nested(CommentSchema, many=True, dump_only=True)
 
 user_schema= UserSchema()
+users_schema=UserSchema(many=True)

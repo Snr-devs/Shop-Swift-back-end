@@ -1,8 +1,10 @@
 from flask import Blueprint, request, make_response, jsonify
 from server.models.user import User
-from server.extensions import db
-from server.schemas.user_schema import user_schema
+from server.extensions import db, limiter
+from server.schemas.user_schema import user_schema,users_schema
 from werkzeug.security import generate_password_hash, check_password_hash
+from server.utils.token import generate_tokens
+from sqlalchemy import or_
 
 
 
@@ -10,7 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 user_bp = Blueprint('users', __name__)
 
 
-@user_bp.route('/users', methods=['POST'])
+@user_bp.route('/register', methods=['POST'])
 def register_user():
     data = request.get_json()
 
@@ -35,9 +37,31 @@ def register_user():
     db.session.add(new_user)
     db.session.commit()
 
-    response_data = user_schema.dump(new_user)
+    response_data = {**generate_tokens(new_user), **user_schema.dump(new_user)}
     return make_response(response_data, 201)
 
+@user_bp.route("/login", methods=['POST'])
+@limiter.limit("3 per minute")
+def login_user():
+    data = request.get_json()
+
+    identifier = data.get("username") or data.get("email")
+    password   = data.get("password")
+
+    if not identifier or not password:
+        return make_response(
+            {"error": "Username/email and password are required"}, 400
+        )
+
+    user = User.query.filter(
+        or_(User.username == identifier, User.email == identifier)
+    ).first()
+
+    if not user or not check_password_hash(user.password, password):
+        return make_response({"error": "Invalid username/email or password"}, 401)
+
+    response = {**generate_tokens(user), "user": user_schema.dump(user)}
+    return make_response(response, 200)
 
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
