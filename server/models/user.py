@@ -1,4 +1,4 @@
-from .extensions import db
+from server.extensions import db
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 

@@ -1,4 +1,4 @@
-from extensions import db
+from server.extensions import db
 from datetime import datetime
 
 class Task(db.Model):
