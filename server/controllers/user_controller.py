@@ -1,4 +1,4 @@
-vfrom flask import Blueprint, request, make_response, jsonify
+from flask import Blueprint, request, make_response, jsonify
 from models.user import User
 from extensions import db
 from schemas.user_schema import user_schema, users_schema
