@@ -1,6 +1,7 @@
 import pytest
 from werkzeug.security import check_password_hash
 from .models import User
+from server.__init__ import create_app
 
 def test_user_creation_and_password_hashing():
    

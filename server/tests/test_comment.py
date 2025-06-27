@@ -4,7 +4,7 @@ from server.extensions import db
 from server.models.comment import Comment
 from server.models.user import User
 from server.models.product import Product
-from app import create_app
+from server.__init__ import create_app
 
 @pytest.fixture
 def test_app():
