@@ -1,4 +1,8 @@
+
+
+
 from server.extensions import db
+
 from datetime import datetime
 
 class Comment(db.Model):
