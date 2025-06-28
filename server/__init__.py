@@ -23,7 +23,7 @@ def create_app():
 
     @app.route("/")
     def home():
-        return {"message": "BookBuddies API is up and running!"}
+        return {"message": "Welcome to my API"}
 
    
     app.register_blueprint(product_bp)
