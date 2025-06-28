@@ -15,21 +15,21 @@ fake = Faker()
 app = create_app()
 
 IMAGE_LINKS = [
-    "https://www.freepik.com/premium-photo/kitchen-appliances-blender-toaster-coffee-machine-meat-ginder-microwave-oven-kettle-3d_18349428.htm#fromView=search&page=1&position=13&uuid=bc30d18d-3c0d-4f91-ba24-d87a36f9cb7c&query=appliances",
-    "https://www.freepik.com/premium-photo/home-appliances-gas-cooker-tv-cinema-refrigerator-air-conditioner-microwave-laptop-washing-machine_9109577.htm#fromView=search&page=1&position=20&uuid=bc30d18d-3c0d-4f91-ba24-d87a36f9cb7c&query=appliances",
-    "https://www.freepik.com/free-photo/view-electronic-product-balancing-podium_38672769.htm#fromView=search&page=1&position=21&uuid=bc30d18d-3c0d-4f91-ba24-d87a36f9cb7c&query=appliances",
-    "https://www.freepik.com/free-photo/new-iron-isolated-white-background_21064720.htm#fromView=search&page=1&position=24&uuid=bc30d18d-3c0d-4f91-ba24-d87a36f9cb7c&query=appliances",
-    "https://www.freepik.com/free-photo/refrigerator-surrounded-by-nature-scene_38048683.htm#fromView=search&page=1&position=27&uuid=bc30d18d-3c0d-4f91-ba24-d87a36f9cb7c&query=appliances",
-    "https://www.freepik.com/free-vector/smart-fridge-gas-oven-hood-kitchen-appliances_9396052.htm#fromView=search&page=1&position=5&uuid=ae0676c8-7e75-4c72-9fd6-edbb087eb2ee&query=appliances",
-    "https://www.freepik.com/free-photo/small-plant-near-various-cosmetics-bottles_2146565.htm#fromView=search&page=1&position=0&uuid=1f09890a-7214-4c0a-8711-2fdc0e5c36ab&query=toiletries",
-    "https://www.freepik.com/premium-photo/hotel-amenities-kit-table-beige-background_42837545.htm#fromView=search&page=1&position=19&uuid=1f09890a-7214-4c0a-8711-2fdc0e5c36ab&query=toiletries",
-    "https://www.freepik.com/premium-photo/set-care-body-isolated-white_16331229.htm#fromView=search&page=1&position=29&uuid=1f09890a-7214-4c0a-8711-2fdc0e5c36ab&query=toiletries",
-    "https://www.freepik.com/free-photo/coconuts-plant-cones_1454710.htm#fromView=search&page=1&position=24&uuid=1f09890a-7214-4c0a-8711-2fdc0e5c36ab&query=toiletries",
-    "https://www.freepik.com/free-photo/high-angle-eco-friendly-products-composition_26471429.htm#fromView=search&page=1&position=44&uuid=1f09890a-7214-4c0a-8711-2fdc0e5c36ab&query=toiletries",
-    "https://www.freepik.com/premium-photo/beauty-set-gift-isolated-white_222550110.htm#fromView=search&page=1&position=24&uuid=553c8c71-65c7-4b62-bd8e-bab3338bb665&query=beauty+producuts",
-    "https://www.freepik.com/free-photo/makeup-lipstick_4166641.htm#fromView=search&page=1&position=17&uuid=553c8c71-65c7-4b62-bd8e-bab3338bb665&query=beauty+producuts",
-    "https://www.freepik.com/free-vector/red-cosmetic-line-skin-care-makeup_8502334.htm#fromView=search&page=1&position=36&uuid=553c8c71-65c7-4b62-bd8e-bab3338bb665&query=beauty+producuts",
-    "https://www.freepik.com/free-photo/still-life-skincare-products_25218968.htm#fromView=search&page=1&position=0&uuid=553c8c71-65c7-4b62-bd8e-bab3338bb665&query=beauty+producuts",
+    "hhttps://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://plus.unsplash.com/premium_photo-1719289799376-d3de0ca4ddbc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://plus.unsplash.com/premium_photo-1719289799376-d3de0ca4ddbc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1099&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://plus.unsplash.com/premium_photo-1661597156656-75ba116e9e1d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fHByb2R1Y3RzfGVufDB8fDB8fHww",
+    "https://images.unsplash.com/photo-1651863548695-b474e99ffcb9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDZ8fHByb2R1Y3RzfGVufDB8fDB8fHww",
+    "https://images.unsplash.com/photo-1640890959827-6307611b34a1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTJ8fHByb2R1Y3RzfGVufDB8fDB8fHww",
+    "https://images.unsplash.com/photo-1567102109796-90071d28cb38?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTR8fHByb2R1Y3RzfGVufDB8fDB8fHww",
+    "https://plus.unsplash.com/premium_photo-1677526496597-aa0f49053ce2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzN8fHByb2R1Y3RzfGVufDB8fDB8fHww",
+    "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGFsY29ob2x8ZW58MHx8MHx8fDA%3D",
+    "https://images.unsplash.com/photo-1618885472179-5e474019f2a9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFsY29ob2x8ZW58MHx8MHx8fDA%3D",
+    "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y3VwfGVufDB8fDB8fHww",
 ]
 
 COMMENTS = [
