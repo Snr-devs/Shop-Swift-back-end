@@ -11,7 +11,6 @@ from server.models.order import Order, OrderProduct
 from server.models.comment import Comment
 
 fake = Faker()
-
 app = create_app()
 
 IMAGE_LINKS = [
@@ -32,99 +31,44 @@ IMAGE_LINKS = [
     "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y3VwfGVufDB8fDB8fHww",
 ]
 
-COMMENTS = [
-    "This product exceeded my expectations!",
-    "Arrived late but still worth it.",
-    "Color was slightly off from the picture.",
-    "Great value for the price.",
-    "I`d definitely buy this again.",
-    "Packaging was neat and secure.",
-    "Didn`t work for me, sadly.",
-    "Customer service was super helpful.",
-    "My kids love it!",
-    "Exactly what I needed, thank you.",
-    "It`s okay — not the best, not the worst."
-]
-
 def reset_db():
+    """Drop and recreate all tables."""
     db.drop_all()
     db.create_all()
 
 def seed_products():
     products = []
     for i in range(15):
-        p = Product(
+        product = Product(
             name=fake.word().title() + f" #{i+1}",
             description=fake.sentence(nb_words=12),
             price=round(random.uniform(5, 150), 2),
             image_url=IMAGE_LINKS[i]
         )
-        db.session.add(p)
-        products.append(p)
+        db.session.add(product)
+        products.append(product)
     db.session.commit()
     return products
 
 def seed_users():
-    users = []
-    template = [("alice", "alice@gmail.com"), ("linus", "linus@gmail.com"), ("carol", "carol@gmail.com")]
-    for username, email in template:
-        u = User(
-            username=username,
-            email=email,
-            password=generate_password_hash("password123"),
-            phone_number=f"+2547{random.randint(10000000, 99999999)}"
+    data = [("alice", "alice@gmail.com"), ("linus", "linus@gmail.com")]
+    for username, email in data:
+        db.session.add(
+            User(
+                username=username,
+                email=email,
+                password=generate_password_hash("password123"),
+                phone_number=f"+2547{random.randint(10000000, 99999999)}"
+            )
         )
-        db.session.add(u)
-        users.append(u)
-    db.session.commit()
-    return users
-
-def create_order(user, products):
-    order = Order(user_id=user.id, total_price=0, status="pending")
-    db.session.add(order)
-    db.session.flush()
-    total = 0
-    for prod in random.sample(products, random.randint(1, 4)):
-        qty = random.randint(1, 3)
-        db.session.add(OrderProduct(order_id=order.id, product_id=prod.id, quantity=qty, price=prod.price))
-        total += prod.price * qty
-    order.total_price = total
-    order.status = "success"
-    db.session.commit()
-
-def create_comment(user, product, content):
-    db.session.add(Comment(
-        user_id=user.id,
-        product_id=product.id,
-        content=content,
-        created_at=datetime.utcnow()
-    ))
-
-def seed_orders_and_comments(users, products):
-    # User 1: 2 orders, 4 comments
-    for _ in range(2):
-        create_order(users[0], products)
-    for comment_text, prod in zip(COMMENTS[:4], random.sample(products, 4)):
-        create_comment(users[0], prod, comment_text)
-
-    # User 2: 1 order, 2 comments
-    create_order(users[1], products)
-    for comment_text, prod in zip(COMMENTS[4:6], random.sample(products, 2)):
-        create_comment(users[1], prod, comment_text)
-
-    # User 3: 0 orders, 5 comments
-    for comment_text, prod in zip(COMMENTS[6:11], random.sample(products, 5)):
-        create_comment(users[2], prod, comment_text)
-
     db.session.commit()
 
 def run_seed():
     with app.app_context():
         reset_db()
-        products = seed_products()
-        users = seed_users()
-        seed_orders_and_comments(users, products)
-        print("🌱 Seed data inserted successfully.")
+        seed_products()
+        seed_users()
+        print("🌱 Seeded 15 products & 2 users (orders/comments left empty).")
 
 if __name__ == "__main__":
     run_seed()
