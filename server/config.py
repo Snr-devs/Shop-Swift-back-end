@@ -14,3 +14,6 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES=timedelta(hours=1)
     JWT_REFRESH_TOKEN_EXPIRES=timedelta(days=7)
     RATELIMIT_HEADERS_ENABLED=True
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "connect_args": {"sslmode": "require"}
+    }
