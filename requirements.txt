@@ -7,5 +7,6 @@ flask_marshmallow
 flask_migrate
 flask_limiter
 psycopg2-binary
+faker
 
 # and any other dependencies you have
