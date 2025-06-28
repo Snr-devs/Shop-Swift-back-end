@@ -7,11 +7,13 @@ from server.controllers.user_controller import user_bp
 # from server.controllers.transaction_controller import transaction_bp
 from server.controllers.comment_controller import comment_bp
 from server.controllers.auth_controller import auth_bp
+from flask_cors import CORS
 
 
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
 
     app.config.from_object(Config)
 

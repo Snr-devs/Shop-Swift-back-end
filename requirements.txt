@@ -8,5 +8,6 @@ flask_migrate
 flask_limiter
 psycopg2-binary
 faker
+flask_cors
 
 # and any other dependencies you have
