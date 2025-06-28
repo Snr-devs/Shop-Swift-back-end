@@ -10,8 +10,7 @@ class Order(db.Model):
     status = db.Column(db.String(20), default='pending', nullable=False)    
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    image_url=db.relationship('Product', back_populates='orders')
-
+    
     user = db.relationship('User', back_populates='orders')
     order_products = db.relationship('OrderProduct', back_populates='order', cascade='all, delete-orphan')
 
