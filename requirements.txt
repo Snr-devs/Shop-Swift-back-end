@@ -1,0 +1,4 @@
+Flask
+gunicorn
+python-dotenv
+# and any other dependencies you have
