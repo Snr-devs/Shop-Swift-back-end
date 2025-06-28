@@ -20,6 +20,7 @@ class OrderSchema(Schema):
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
     order_products = fields.Nested(OrderProductSchema, many=True, required=True)
+    image_url=fields.Str(dump_only=True)
 
 
 order_schema = OrderSchema()
