@@ -85,8 +85,14 @@ def update_profile():
     user = User.query.get_or_404(user_id)
 
     data = request.get_json()
+    new_email = data.get('email', user.email)
+
+    if new_email != user.email:
+        if User.query.filter(User.email == new_email, User.id != user.id).first():
+            return make_response({'error': 'Email already in use'}, 409)
+
     user.username = data.get('username', user.username)
-    user.email = data.get('email', user.email)
+    user.email = new_email
     user.phone_number = data.get('phone_number', user.phone_number)
 
     db.session.commit()
