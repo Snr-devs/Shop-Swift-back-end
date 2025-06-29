@@ -33,7 +33,7 @@ def register_user():
     
     hashed_password = generate_password_hash(password)
 
-    new_user = User(username=username, email=email, password=hashed_password, phone_number=phone_number)
+    new_user = User(username=username, email=email, password_hash=hashed_password, phone_number=phone_number)
     db.session.add(new_user)
     db.session.commit()
 
@@ -57,7 +57,7 @@ def login_user():
         or_(User.username == identifier, User.email == identifier)
     ).first()
 
-    if not user or not check_password_hash(user.password, password):
+    if not user or not check_password_hash(user.password_hash, password):
         return make_response({"error": "Invalid username/email or password"}, 401)
 
     response = {**generate_tokens(user), "user": user_schema.dump(user)}
