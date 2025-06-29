@@ -81,3 +81,28 @@ def view_cart():
         "total_price": str(order.total_price),
         "cart": cart_items
     }), 200
+@order_bp.route('/cart/<int:product_id>', methods=['DELETE'])
+@jwt_required()
+def remove_from_cart(product_id):
+    user_id = get_jwt_identity()
+    order = Order.query.filter_by(user_id=user_id, status='pending').first()
+
+    if not order:
+        return jsonify({"error": "Cart not found"}), 404
+
+    order_product = OrderProduct.query.filter_by(order_id=order.id, product_id=product_id).first()
+
+    if not order_product:
+        return jsonify({"error": "Product not in cart"}), 404
+
+    product = order_product.product
+    product.stock += order_product.quantity
+
+    db.session.delete(order_product)
+
+    order.total_price = sum([
+        op.quantity * op.price for op in order.order_products if op.product_id != product_id
+    ])
+
+    db.session.commit()
+    return jsonify({"message": f"Product {product_id} removed from cart"}), 200

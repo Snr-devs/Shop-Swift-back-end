@@ -29,7 +29,7 @@ def create_app():
 
    
     app.register_blueprint(product_bp)
-    app.register_blueprint(order_bp)
+    app.register_blueprint(order_bp, url_prefix="/orders")
     app.register_blueprint(user_bp)
     app.register_blueprint(comment_bp)
     app.register_blueprint(auth_bp)
