@@ -57,7 +57,7 @@ def seed_users():
             User(
                 username=username,
                 email=email,
-                password=generate_password_hash("password123"),
+                password_hash=generate_password_hash("password123"),
                 phone_number=f"+2547{random.randint(10000000, 99999999)}"
             )
         )
