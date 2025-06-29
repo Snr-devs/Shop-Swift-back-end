@@ -47,16 +47,22 @@ def seed_products():
     return products
 
 def seed_users():
-    data = [("alice", "alice@gmail.com"), ("linus", "linus@gmail.com")]
-    for username, email in data:
-        user = User(
-            username=username,
-            email=email,
-            password="password123",  
+    users_data = [
+        {"username": "alice", "email": "alice@gmail.com", "password": "alicepass"},
+        {"username": "linus", "email": "linus@gmail.com", "password": "linuspass"},
+    ]
+
+    for user in users_data:
+        seeded_user = User(
+            username=user["username"],
+            email=user["email"],
+            password=user["password"],
             phone_number=f"+2547{random.randint(10000000, 99999999)}"
         )
-        db.session.add(user)
+        db.session.add(seeded_user)
+
     db.session.commit()
+
 
 def run_seed():
     with app.app_context():
