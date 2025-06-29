@@ -11,6 +11,11 @@ from server.models.order import Order
 load_dotenv()
 
 app = create_app()
+
+with app.app_context():
+    users = User.query.all()
+    for u in users:
+        print(u.username, u.email, u.password_hash)
 cli = FlaskGroup(app)
 
 if __name__ == "__main__":

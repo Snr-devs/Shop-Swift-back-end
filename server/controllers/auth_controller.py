@@ -1,5 +1,5 @@
 from flask import Blueprint, request, make_response
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from server.extensions import db
 from server.models.user import User
 from server.schemas.user_schema import UserSchema
@@ -16,8 +16,6 @@ from datetime import timedelta
 auth_bp = Blueprint('auth', __name__)
 user_schema = UserSchema()
 
-
-
 @auth_bp.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -33,15 +31,13 @@ def register():
     if User.query.filter((User.email == email) | (User.username == username)).first():
         return make_response({'error': 'User already exists'}, 409)
 
-    password_hash = generate_password_hash(password)
-    user = User(username=username, email=email, phone_number=phone_number, password_hash=password_hash)
+    # ✅ Let the model handle password hashing
+    user = User(username=username, email=email, password=password, phone_number=phone_number)
 
     db.session.add(user)
     db.session.commit()
 
     return make_response(user_schema.dump(user), 201)
-
-
 
 @auth_bp.route('/api/login', methods=['POST'])
 def login():
@@ -67,16 +63,12 @@ def login():
         'user': user_schema.dump(user)
     }, 200)
 
-
-
 @auth_bp.route('/api/profile', methods=['GET'])
 @jwt_required()
 def get_profile():
     user_id = get_jwt_identity()
     user = User.query.get_or_404(user_id)
     return make_response(user_schema.dump(user), 200)
-
-
 
 @auth_bp.route('/api/profile', methods=['PUT'])
 @jwt_required()
@@ -97,8 +89,6 @@ def update_profile():
 
     db.session.commit()
     return make_response(user_schema.dump(user), 200)
-
-
 
 @auth_bp.route('/api/refresh', methods=['POST'])
 @jwt_required(refresh=True)

@@ -1,16 +1,12 @@
-from flask import Blueprint, request, make_response, jsonify
+from flask import Blueprint, request, make_response
 from server.models.user import User
 from server.extensions import db, limiter
-from server.schemas.user_schema import user_schema,users_schema
-from werkzeug.security import generate_password_hash, check_password_hash
+from server.schemas.user_schema import user_schema, users_schema
+from werkzeug.security import check_password_hash
 from server.utils.token import generate_tokens
 from sqlalchemy import or_
 
-
-
-
 user_bp = Blueprint('users', __name__)
-
 
 @user_bp.route('/register', methods=['POST'])
 def register_user():
@@ -30,10 +26,8 @@ def register_user():
     if User.query.filter_by(username=username).first():
         return make_response({'error': 'Username already taken'}, 409)
 
-    
-    hashed_password = generate_password_hash(password)
-
-    new_user = User(username=username, email=email, password_hash=hashed_password, phone_number=phone_number)
+    # ✅ Just pass plain password. Model will hash it.
+    new_user = User(username=username, email=email, password=password, phone_number=phone_number)
     db.session.add(new_user)
     db.session.commit()
 
@@ -46,12 +40,10 @@ def login_user():
     data = request.get_json()
 
     identifier = data.get("username") or data.get("email")
-    password   = data.get("password")
+    password = data.get("password")
 
     if not identifier or not password:
-        return make_response(
-            {"error": "Username/email and password are required"}, 400
-        )
+        return make_response({"error": "Username/email and password are required"}, 400)
 
     user = User.query.filter(
         or_(User.username == identifier, User.email == identifier)
@@ -66,12 +58,9 @@ def login_user():
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get_or_404(user_id)
-    response_data = user_schema.dump(user)
-    return make_response(response_data, 200)
-
+    return make_response(user_schema.dump(user), 200)
 
 @user_bp.route('/users', methods=['GET'])
 def get_all_users():
     users = User.query.all()
-    response_data = users_schema.dump(users)
-    return make_response(response_data, 200)
+    return make_response(users_schema.dump(users), 200)
