@@ -5,6 +5,7 @@ from server.models import db, Product, Order, OrderProduct
 order_bp = Blueprint('order_bp', __name__)
 
 @order_bp.route('/orders/buy', methods=['POST'])
+@jwt_required()
 def buy_product():
     data = request.get_json()
     product_id = data.get('product_id')
@@ -50,6 +51,7 @@ def buy_product():
 
 
 @order_bp.route('/orders/cart', methods=['GET'])
+@jwt_required()
 def view_cart():
     user_id = get_jwt_identity()
     order = Order.query.filter_by(user_id=user_id, status='pending').first()
@@ -79,7 +81,10 @@ def view_cart():
         "total_price": str(order.total_price),
         "cart": cart_items
     }), 200
+
+
 @order_bp.route('/orders/cart/<int:product_id>', methods=['DELETE'])
+@jwt_required()
 def remove_from_cart(product_id):
     user_id = get_jwt_identity()
     order = Order.query.filter_by(user_id=user_id, status='pending').first()
