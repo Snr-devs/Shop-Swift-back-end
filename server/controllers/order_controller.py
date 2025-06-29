@@ -1,60 +1,83 @@
-from flask import Blueprint, request, make_response, jsonify
-from server.models.order import Order, OrderProduct
-from server.models.product import Product
-from server.extensions import db
-from server.schemas.order_schema import OrderSchema
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from server.models import db, Product, Order, OrderProduct
 
-order_bp = Blueprint('orders', __name__)
-order_schema = OrderSchema()
-orders_schema = OrderSchema(many=True)
+order_bp = Blueprint('order_bp', __name__)
 
-
-@order_bp.route('/orders', methods=['POST'])
-def place_order():
+@order_bp.route('/buy', methods=['POST'])
+@jwt_required()
+def buy_product():
     data = request.get_json()
+    product_id = data.get('product_id')
+    quantity = int(data.get('quantity', 1))
+    user_id = get_jwt_identity()
 
-    user_id = data.get('user_id')
-    products_data = data.get('products')
+    if not product_id:
+        return jsonify({"error": "Product ID is required"}), 400
 
-    if not user_id or not products_data:
-        return make_response({'error': 'Missing user_id or products'}, 400)
+    product = Product.query.get(product_id)
+    if not product:
+        return jsonify({"error": "Product not found"}), 404
 
-    order = Order(user_id=user_id, total_price=0)
-    total = 0
+    if product.stock < quantity:
+        return jsonify({"error": "Not enough stock"}), 400
 
-    for item in products_data:
-        product = Product.query.get(item['product_id'])
-        if not product:
-            return make_response({'error': f'Product ID {item["product_id"]} not found'}, 404)
+    order = Order.query.filter_by(user_id=user_id, status='pending').first()
+    if not order:
+        order = Order(user_id=user_id, total_price=0)
+        db.session.add(order)
+        db.session.commit()
 
-        quantity = item.get('quantity', 1)
-        if quantity > product.stock:
-            return make_response({'error': f'Not enough stock for {product.name}'}, 400)
-
-        product.stock -= quantity
-
+    order_product = OrderProduct.query.filter_by(order_id=order.id, product_id=product_id).first()
+    if order_product:
+        order_product.quantity += quantity
+    else:
         order_product = OrderProduct(
+            order_id=order.id,
             product_id=product.id,
             quantity=quantity,
-            price=product.price * quantity
+            price=product.price
         )
-        order.order_products.append(order_product)
-        total += product.price * quantity
+        db.session.add(order_product)
 
-    order.total_price = total
-    db.session.add(order)
+    product.stock -= quantity
+
+    order.total_price = sum([
+        op.quantity * op.price for op in order.order_products
+    ])
+
     db.session.commit()
-
-    return make_response(order_schema.dump(order), 201)
-
-
-@order_bp.route('/orders', methods=['GET'])
-def get_orders():
-    orders = Order.query.all()
-    return make_response(orders_schema.dump(orders), 200)
+    return jsonify({"message": "Product added to cart", "order_id": order.id}), 201
 
 
-@order_bp.route('/orders/<int:order_id>', methods=['GET'])
-def get_order(order_id):
-    order = Order.query.get_or_404(order_id)
-    return make_response(order_schema.dump(order), 200)
+@order_bp.route('/cart', methods=['GET'])
+@jwt_required()
+def view_cart():
+    user_id = get_jwt_identity()
+    order = Order.query.filter_by(user_id=user_id, status='pending').first()
+
+    if not order or not order.order_products:
+        return jsonify({
+            "message": "Cart is empty",
+            "cart": [],
+            "total_price": "0.00"
+        }), 200
+
+    cart_items = []
+    for item in order.order_products:
+        product = item.product
+        subtotal = item.price * item.quantity
+        cart_items.append({
+            "product_id": product.id,
+            "name": product.name,
+            "image_url": product.image_url,
+            "price": str(item.price),
+            "quantity": item.quantity,
+            "subtotal": str(subtotal)
+        })
+
+    return jsonify({
+        "order_id": order.id,
+        "total_price": str(order.total_price),
+        "cart": cart_items
+    }), 200
